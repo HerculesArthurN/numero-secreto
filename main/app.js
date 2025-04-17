@@ -1,73 +1,53 @@
-let listaDeNumerosSorteados = [];
-let numeroLimite = 40;
-let numeroSecreto = gerarNumeroAleatorio();
-let tentativas = 1;
+let numeroLimite = 40;  // Limite máximo para o número secreto
+let numeroSecreto = gerarNumeroAleatorio();  // Gera o número secreto aleatório
+let tentativas = 1;  // Contador de tentativas
 
+// Função para exibir mensagem na tela e também falar a mensagem
 function exibirTextoNaTela(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
-    responsiveVoice.speak(texto, 'Brazilian Portuguese Female', {rate:1.2});
+    responsiveVoice.speak(texto, 'Brazilian Portuguese Female', {rate: 1.2});
 }
 
-function exibirMensagemInicial() {
-    exibirTextoNaTela('h1', 'Jogo do número secreto');
-    exibirTextoNaTela('p', 'Escolha um número entre 1 e 40');
+// Função para gerar um número aleatório
+function gerarNumeroAleatorio() {
+    return parseInt(Math.random() * numeroLimite + 1);
 }
 
-exibirMensagemInicial();
-
+// Função que verifica o chute do jogador
 function verificarChute() {
-    let chute = document.querySelector('input').value;
-    
+    let chute = document.querySelector('#inputNumero').value;
+
+    // Se o chute for igual ao número secreto, o jogo termina
     if (chute == numeroSecreto) {
         exibirTextoNaTela('h1', 'Acertou!');
         let palavraTentativa = tentativas > 1 ? 'tentativas' : 'tentativa';
         let mensagemTentativas = `Você descobriu o número secreto com ${tentativas} ${palavraTentativa}!`;
         exibirTextoNaTela('p', mensagemTentativas);
-        document.getElementById('reiniciar').removeAttribute('disabled');
+        document.getElementById('reiniciar').removeAttribute('disabled');  // Habilita botão "Novo Jogo"
     } else {
         if (chute > numeroSecreto) {
             exibirTextoNaTela('p', 'O número secreto é menor');
         } else {
             exibirTextoNaTela('p', 'O número secreto é maior');
         }
-        tentativas++;
-        limparCampo();
+        tentativas++;  // Incrementa o número de tentativas
+        limparCampo();  // Limpa o campo de entrada
     }
 }
 
-function gerarNumeroAleatorio() {
-    let numeroEscolhido = parseInt(Math.random() * numeroLimite + 1);
-    let quantidadeDeElementosNaLista = listaDeNumerosSorteados.length;
-
-    if (quantidadeDeElementosNaLista == numeroLimite) {
-        listaDeNumerosSorteados = [];
-    }
-    if (listaDeNumerosSorteados.includes(numeroEscolhido)) {
-        return gerarNumeroAleatorio();
-    } else {
-        listaDeNumerosSorteados.push(numeroEscolhido);
-        console.log(listaDeNumerosSorteados)
-        return numeroEscolhido;
-    }
-}
-
+// Função para limpar o campo de entrada
 function limparCampo() {
-    chute = document.querySelector('input');
+    let chute = document.querySelector('#inputNumero');
     chute.value = '';
 }
 
+// Função para reiniciar o jogo
 function reiniciarJogo() {
     numeroSecreto = gerarNumeroAleatorio();
-    limparCampo();
     tentativas = 1;
-    exibirMensagemInicial();
-    document.getElementById('reiniciar').setAttribute('disabled', true)
+    limparCampo();
+    exibirTextoNaTela('h1', 'Jogo do número secreto');
+    exibirTextoNaTela('p', 'Escolha um número entre 1 e 40');
+    document.getElementById('reiniciar').setAttribute('disabled', true);  // Desabilita botão "Novo Jogo"
 }
-
-
-
-
-
-
-
