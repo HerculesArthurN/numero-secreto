@@ -25,13 +25,6 @@ Ah, e tem um botão de **"Novo jogo"** pra recomeçar quantas vezes quiser. 🎉
 
 ---
 
-## 🖼️ Preview
-
-> ![Screenshot do jogo](./img/preview.png)  
-> *"Um jogo simples, mas com estilo!"*
-
----
-
 ## 🚀 Como rodar localmente
 
 1. Clone o repositório:
